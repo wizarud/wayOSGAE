@@ -1,0 +1,84 @@
+	<section id="social" class="social">
+		<div class="container">
+			<div class="row">
+				<div class="social-wrapper">
+					<div class="col-md-6" style="display: inline-block;">
+						<a href="/">
+							<h2 id="title" style="line-height: 50px">WAYOS</h2>
+						</a>
+					</div>
+					<div class="col-md-6" style="display: inline-block;float: right;">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header" style="display: inline-block;">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span> 
+								<span class="icon-bar"></span> 
+								<span class="icon-bar"></span> 
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+
+				<ul id="richMenus" class="nav navbar-nav">
+					<%
+					boolean isLogin = false;
+					String name = "";
+					String domain = System.getenv("domain");
+					
+					//For highlight TAG Menu
+					java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com.wayos.i18n.text");
+					String t = request.getParameter("tag");
+					if (t==null) {
+						t = (String) request.getAttribute("tag");
+					}
+					if (t==null) {
+						t = "";
+					}
+					String h = "style=\"width: 150px; color: #ffffff; background-color:#64c583\"";
+					String a = "style=\"width: 150px\"";					
+					%>
+					
+					<li class="login" style="margin:0 30px"><a href="/" <%= t.equals("")?h:a %>><fmt:message key="tag.home" /></a></li>
+					
+					<%
+					
+					if (session != null) {
+						
+						if (session.getAttribute("name") != null) {
+							isLogin = true;
+							name = (String) session.getAttribute("name");
+					%>
+					
+							<style type="text/css">.cd-pricing-wrapper form{display: block;}.cd-select{display: none !important;}</style>
+							<li class="login"><a href="/console/dashboard.jsp" <%= a %>><fmt:message key="sidbar.dashboard" /></a></li>
+							<li class="login"><a href="/console/inbox.jsp" id="displayUn" <%= a %>><%= name %></a></li>
+							<li class="login"><a onclick="logout();" style="cursor: pointer; width: 150px;"><fmt:message key="btt.logout" /></a></li>
+	
+					<% } else { %>
+					
+							<li class="login" style="width: auto">
+							<a class="fbLogin">
+								<%--fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button--%>
+								<fb:login-button size="large" scope="public_profile,,email,pages_show_list,pages_manage_metadata,pages_messaging,pages_manage_engagement,pages_read_engagement,pages_read_user_content,pages_manage_posts" onlogin="checkLoginState();"></fb:login-button>
+							</a>
+							</li>
+							
+					<% } %>
+						<%-- Rich Menus --%>
+						
+					<% } %>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>

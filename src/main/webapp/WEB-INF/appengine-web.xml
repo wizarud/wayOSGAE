@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app
+	xmlns="http://appengine.google.com/ns/1.0">
+
+	<threadsafe>true</threadsafe>
+	<sessions-enabled>true</sessions-enabled>
+	<runtime>java8</runtime>
+
+	<system-properties>
+		<property name="java.util.logging.config.file"
+			value="WEB-INF/logging.properties" />
+	</system-properties>
+
+	<!-- Upgrade your CPU/Memory here for your environment -->
+
+	<!-- 
+	<instance-class>F4</instance-class>
+	<automatic-scaling> 
+		<target-cpu-utilization>0.65</target-cpu-utilization> 
+		<min-instances>1</min-instances> 
+		<max-instances>1</max-instances> 
+		<max-concurrent-requests>10</max-concurrent-requests> 
+	</automatic-scaling> 
+	-->
+
+	<env-variables>
+
+		<env-var name="brainySecret" value="D0ra3m0n" />
+
+		<!-- Facebook Sdk -->
+		<env-var name="facebook_appId" value="208498564198080" />
+		<env-var name="facebook_appSecret" value="737cc872ed147383738038b9bba330e1" />
+
+		<!-- Firebase Setup -->
+		<env-var name="projectId" value="flex-311116" />
+		<env-var name="apiKey" value="AIzaSyD47O40D6lmsQb8jQUOo7daVv3glSz7XIo" />
+		<env-var name="authDomain" value="eoss-wayo-bot.firebaseapp.com" />
+		<env-var name="databaseURL"	value="https://eoss-wayo-bot.firebaseio.com" />
+		<env-var name="storageBucket" value="flex-311116.appspot.com" />
+		<env-var name="messagingSenderId" value="676972809113" />
+		<env-var name="appId" value="1:676972809113:android:0ffd90b8c85895e6fb2108" />
+		<env-var name="vapidKey" value="BG6X7TWkNee2kEYHt2RCNBYuqCaeAws5t-w2bs_vncgqIuN3r9oE8lqJHEfh4h0vByYx372ipDpVNgQF_fZ6mSg" />
+
+		<!-- Your Domain Replace www.wayobot.com to your domain or storageBucket's 
+			URL if you don't have any registration domain's name. 
+			Ex: https://<Your Project Id>.appspot.com 
+		-->
+		<env-var name="domain" value="https://flex-311116.appspot.com" />
+
+		<!-- Root Directory for context files -->
+		<env-var name="contextHome" value="libs/" />
+		<env-var name="publicHome" value="public/" />
+		
+		<env-var name="showcaseAccountId" value="103014451870896" />
+		<env-var name="showcaseBotId" value="Michael-Yong" />
+
+		<env-var name="templateContextNames" value="103014451870896/Michael-Yong" />
+		
+	</env-variables>
+
+</appengine-web-app>

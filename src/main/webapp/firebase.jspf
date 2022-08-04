@@ -1,0 +1,71 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+<script	src="https://www.gstatic.com/firebasejs/8.1.2/firebase-messaging.js"></script>
+<script>
+
+function showNotification(title, body, url) {
+	const notification = new Notification(title, {body});
+	notification.onclick = (e) => {
+		window.location.href = url;
+	};
+}
+
+Notification.requestPermission(function() {
+	  
+	if (Notification.permission === 'granted') {
+		
+	    if (firebase.apps.length === 0) {
+	    	
+	    	firebase.initializeApp(<%= application.getAttribute("firebaseConfig") %>);
+			 
+			const messaging = firebase.messaging();
+			 
+			messaging.getToken({vapidKey: '<%= System.getenv("vapidKey") %>'}).then((currentToken) => {
+			
+			    if (currentToken) {
+			    		 
+					//Touch reach
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "/reach?fcm=" + currentToken, true);
+					xhr.onreadystatechange = function() {
+					  	if (xhr.readyState == 4 && xhr.status == 200) {
+					   		console.log("(^o^)ๆ REACH! " + currentToken);
+					  	} else {
+					  		console.log("(^o^)ๆ UNREACH! " + currentToken);						  		
+					  	}
+					};						
+					xhr.send();
+			    		 
+				} else {
+				  	// Show permission request.
+				  	console.log('(T.T)ๆ No registration token available. Request permission to generate one.');
+			    }
+			
+		    }).catch((err) => {
+		    	console.log('(T.T)ๆ An error occurred while retrieving token. ', err);
+		    });
+			    
+    	    messaging.onMessage((payload) => {
+    	     		
+    	    	//Notification Alert!
+    	    	const accountId = payload.data.accountId;
+    	    	const botId = payload.data.botId;
+    	    		
+    	    	var targetURL;
+    	    	if (!botId || botId === '*') {
+    	    		targetURL = "https://" + window.location.hostname + "/console/inbox.jsp";
+    	    	} else {
+    	    		targetURL = "https://" + window.location.hostname + "/x/" + accountId + "/" + botId + "?push=" + payload.notification.body;
+    	    	}
+    	    	
+    	    	showNotification(payload.notification.title, payload.notification.body, targetURL);
+    	    		
+    	   });
+			    				    
+		}
+    } 
+});
+
+</script>

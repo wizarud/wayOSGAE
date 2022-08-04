@@ -25,7 +25,7 @@
 
 	<env-variables>
 
-		<env-var name="brainySecret" value="D0ra3m0n" />
+		<env-var name="brainySecret" value="" />
 
 		<!-- Facebook Sdk -->
 		<env-var name="facebook_appId" value="208498564198080" />
@@ -33,14 +33,8 @@
 
 		<!-- Firebase Setup -->
 		<env-var name="projectId" value="flex-311116" />
-		<env-var name="apiKey" value="AIzaSyD47O40D6lmsQb8jQUOo7daVv3glSz7XIo" />
-		<env-var name="authDomain" value="eoss-wayo-bot.firebaseapp.com" />
-		<env-var name="databaseURL"	value="https://eoss-wayo-bot.firebaseio.com" />
 		<env-var name="storageBucket" value="flex-311116.appspot.com" />
-		<env-var name="messagingSenderId" value="676972809113" />
-		<env-var name="appId" value="1:676972809113:android:0ffd90b8c85895e6fb2108" />
-		<env-var name="vapidKey" value="BG6X7TWkNee2kEYHt2RCNBYuqCaeAws5t-w2bs_vncgqIuN3r9oE8lqJHEfh4h0vByYx372ipDpVNgQF_fZ6mSg" />
-
+		
 		<!-- Your Domain Replace www.wayobot.com to your domain or storageBucket's 
 			URL if you don't have any registration domain's name. 
 			Ex: https://<Your Project Id>.appspot.com 

@@ -24,7 +24,17 @@ To be updated later
 
 ## Contributor
 
-**apple**
+**Wisarut Srisawet**
+
+Special Thanks for good ideas from the following peoples
+
+Masan S
+Chalat C
+Athaporn K
+Wasan S
+Naravalt L
+Nu Appchain
+and Xperience Mac
 
 ## License
 A free and open source project.

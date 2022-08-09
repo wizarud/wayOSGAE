@@ -20,8 +20,16 @@
 	box-sizing: border-box;  
 	font-size: 16px;
 }
+.eossFileButton {
+    width: 8%;
+	border: 1px solid white;
+   	background: #3498db;
+    color: white;
+   	line-height: 40px;
+    margin-bottom: 10px;
+}
 .eossButton {
-    width: 50%;
+    width: 45%;
 	border: 1px solid white;
    	background: #3498db;
     color: white;
@@ -69,8 +77,9 @@
 		<div class="col-md-12" style="text-align: center; padding: 0;">
 			<iframe id="wayos-frame" frameborder="0" scrolling="no" allowfullscreen></iframe>
 				<p class="footer">
-					<textarea id="inputTextArea" class="eossTextArea" rows="3" cols="55"></textarea><br>
-					<button id="ringButton" class="eossButton" >🔔</button><button id="sendButton" class="eossButton">SEND</button>	
+					<textarea id="inputTextArea" class="eossTextArea" rows="3" cols="55" placeholder="<fmt:message key="textarea.typehere" />"></textarea><br>
+					<input type="file" id="fileDialog" style="display: none">
+					<button id="fileButton" class="eossFileButton">🖼</button><button id="ringButton" class="eossButton" >🔔</button><button id="sendButton" class="eossButton">SEND</button>	
 				</p>
 		</div>
 	</section>
@@ -83,10 +92,12 @@
 	<script>
 	const FRAME_HEIGHT = "59vh";
 	var inputTextArea = document.getElementById("inputTextArea");
+	var fileButton = document.getElementById("fileButton");
 	var ringButton = document.getElementById("ringButton");
 	var sendButton = document.getElementById("sendButton");
 	
 	inputTextArea.disabled = true;
+	fileButton.disabled = true;
 	ringButton.disabled = true;
 	sendButton.disabled = true;
 	
@@ -294,9 +305,53 @@
 		    	setTimeout(arguments.callee.bind(this), 500);
 		    	
 		    } 
-
+		    
+		    inputTextArea.focus();
+		
 		}.bind(this), 0);
 	}
+		
+	eossWayoBot.sendFilesToEossBot = function() {
+		
+		const input = document.getElementById("fileDialog");
+		
+		const files = Array.from(input.files);
+		
+		showLoading(true);
+		
+        let formData = new FormData();
+        
+        let fileNames = "";
+        let totalSize = 0;
+        
+        for (let i in files) {
+    		formData.append('file', files[i]);
+    		totalSize += files[i].size;
+    		fileNames += files[i].name + " ";
+        }
+        
+        console.log("Sending File.." + fileNames);
+        console.log("Total Files Size: " + totalSize);
+
+ 		let xhr = new XMLHttpRequest();
+ 		let url = this.domain + "/webhooks/" + this.accountId + "/" + this.botId + "/" + this.sessionId;
+ 		
+ 		xhr.open("POST", url); 
+ 		
+ 		xhr.onload = function() {
+ 			
+ 		    if (xhr.status === 200) {
+ 		    	
+ 		    	showLoading(false);
+ 				
+ 		    	this.animateResponseText(xhr.responseText);
+ 		    	
+ 		    }
+ 			
+ 		}.bind(this);
+ 		
+ 		xhr.send(formData);	
+ 	}
 	
 	eossWayoBot.sendMessageToEossBot = function(message, success) {
 		
@@ -395,14 +450,27 @@
    		}
  	  	
  		inputTextArea.disabled = false;
+ 		inputTextArea.autofocus = true;
  		
+ 		fileButton.disabled = false;
+ 		fileButton.style.color = "WHITE";
+ 		fileButton.style.backgroundColor = config.borderColor;
+ 	  	
  		ringButton.disabled = false;
  	  	ringButton.style.color = "WHITE";
  	  	ringButton.style.backgroundColor = config.borderColor;
  	  	
  		sendButton.disabled = false;
  	  	sendButton.style.color = "WHITE";
- 	  	sendButton.style.backgroundColor = config.borderColor; 	  	
+ 	  	sendButton.style.backgroundColor = config.borderColor;
+ 	  	
+ 	  	fileButton.addEventListener('click', function() {
+ 	  		let fileDialog = document.getElementById("fileDialog");
+ 	  		fileDialog.onchange = function () {
+ 	 	  		this.sendFilesToEossBot();
+ 	  		}.bind(this);
+ 	  		fileDialog.click();
+ 	  	}.bind(this));
  	  	
  		ringButton.addEventListener('click', function(event) {
             var message = "greeting";

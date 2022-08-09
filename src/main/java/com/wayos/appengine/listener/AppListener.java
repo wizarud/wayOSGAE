@@ -14,7 +14,7 @@ import com.wayos.Configuration;
 import com.wayos.PathStorage;
 import com.wayos.appengine.storage.GcsStorage;
 import com.wayos.connector.SessionPool;
-import com.wayos.connector.SessionPoolFactory;
+import com.wayos.connector.BLESessionPoolFactory;
 import com.wayos.firebase.pusher.MobilePusher;
 import com.wayos.firebase.pusher.WebPusher;
 import com.wayos.pusher.FacebookPusher;
@@ -38,7 +38,7 @@ public class AppListener implements ServletContextListener, HttpSessionListener 
 		
 		PusherUtil pusherUtil = new PusherUtil();
 		
-		SessionPoolFactory sessionPoolFactory = new SessionPoolFactory(storage, consoleUtil, pusherUtil);
+		BLESessionPoolFactory sessionPoolFactory = new BLESessionPoolFactory(storage, consoleUtil, pusherUtil);
 		
 		SessionPool sessionPool = sessionPoolFactory.create();
 

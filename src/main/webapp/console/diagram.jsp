@@ -106,8 +106,6 @@
 
 <%@ include file="fragment/env-param.jspf"%>
 
-<%@ include file="/firebase.jspf"%>
-
 	<div id="loader" class="overlayBot" style="display: none;">
 		<div style="width: 100%; height: 100%; z-index: 200">
 			<div class="loader"></div>

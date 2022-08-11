@@ -15,11 +15,10 @@ import com.wayos.PathStorage;
 import com.wayos.appengine.storage.GcsStorage;
 import com.wayos.connector.SessionPool;
 import com.wayos.connector.BLESessionPoolFactory;
-import com.wayos.firebase.pusher.MobilePusher;
-import com.wayos.firebase.pusher.WebPusher;
 import com.wayos.pusher.FacebookPusher;
 import com.wayos.pusher.LinePusher;
 import com.wayos.pusher.PusherUtil;
+import com.wayos.pusher.WebPusher;
 import com.wayos.util.Application;
 import com.wayos.util.ConsoleUtil;
 
@@ -43,7 +42,7 @@ public class AppListener implements ServletContextListener, HttpSessionListener 
 		SessionPool sessionPool = sessionPoolFactory.create();
 
 		/**
-		 * Register Single Instance of Utilities class
+		 * Register Single Instance of Utilities class for future usages
 		 */		
 		Application.instance().register(SessionPool.class.getName(), sessionPool);
 		Application.instance().register(PathStorage.class.getName(), storage);
@@ -55,7 +54,6 @@ public class AppListener implements ServletContextListener, HttpSessionListener 
 		Application.instance().register(PusherUtil.class.getName(), pusherUtil);
 		Application.instance().register("line", new LinePusher(storage));
 		Application.instance().register("facebook.page", new FacebookPusher(storage));
-		Application.instance().register("mobile", new MobilePusher(storage));
 		Application.instance().register("web", new WebPusher(storage));
 
 		JSONObject firebaseConfig = new JSONObject();

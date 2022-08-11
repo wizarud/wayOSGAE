@@ -51,8 +51,11 @@
 </style>
 </head>
 <body>
+
 <div id="fb-root"></div>
+
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v3.2&appId=477788152679063&autoLogAppEvents=1"></script>
+
 <!--[if lt IE 8]>
 	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -88,8 +91,14 @@
 	<%@ include file="javascript.jspf" %>	
 	<%@ include file="fbSDK.jspf" %>
 
-	<%--@ include file="firebase.jspf"--%>
 	<script>
+	function showNotification(title, body, url) {
+		const notification = new Notification(title, {body});
+		notification.onclick = (e) => {
+			window.location.href = url;
+		};
+	}
+		
 	const FRAME_HEIGHT = "59vh";
 	var inputTextArea = document.getElementById("inputTextArea");
 	var fileButton = document.getElementById("fileButton");
@@ -206,6 +215,11 @@
 				this.style.width = "100%";
 				this.style.height = FRAME_HEIGHT;
 				this.onload = null;
+				
+				//Focus text area if there is no choices!
+				if (innerHTML.indexOf("eoss_menu_item")===-1) {
+				    inputTextArea.focus();					
+				}
 			}
 			frame.onerror = function () {
 				this.src = src;
@@ -306,8 +320,6 @@
 		    	
 		    } 
 		    
-		    inputTextArea.focus();
-		
 		}.bind(this), 0);
 	}
 		
@@ -516,8 +528,25 @@
 	 	xhr.send();
     }
     
-	eossWayoBot.load();
+	//Request User Permission to receive the notification
+	try {
 		
+		Notification.requestPermission(function() {
+		  
+			if (Notification.permission === 'granted') {
+				//TODO: Init Web Worker to monitor inbox
+			} 
+			
+	    	eossWayoBot.load();
+	    	
+		});
+	
+	} catch (x) {
+		
+    	eossWayoBot.load();
+	
+	}
+	
 	</script>
 	
 </html>

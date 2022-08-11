@@ -19,6 +19,9 @@
                         <div class="card col-md-8" style="padding: 10px;">
                         	<div id="service-content" class="content" >
 								<div>
+									<label><fmt:message key="push.bot.target" /> : </label>
+									<label id="target" style="text-transform: none;">All</label>
+									<br>
 									<label><fmt:message key="push.bot.name" /> : </label>
 									<label id="botName" style="text-transform: none;"></label>
 									<br>
@@ -50,10 +53,11 @@
 </body>
 <%@ include file="fragment/env-js.jspf" %>		
 
-<script src="js/push-service.js"></script>
+<script src="js/push-service2.js"></script>
 
 <script type="text/javascript">
 function onBotListLoaded() {
+	
 	$("#botName").text(botId);
 	$("#chat_widget_file").change(function() {
 		sendFiles(document.getElementById("chat_widget_file").files);

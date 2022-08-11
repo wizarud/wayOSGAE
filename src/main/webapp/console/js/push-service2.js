@@ -108,10 +108,11 @@ $('#chat_widget_button').click(function () {
 	$("#chat_widget_button").attr("disabled", true);
 	$("#chat_widget_button").val(sending_text);
 	    
-    var message = $('#chat_widget_input').val(); //get the value from the text input
-	var keyword = $("#keyword").val();
+    const message = $("#chat_widget_input").val(); //get the value from the text input
+	const keyword = $("#keyword").val();
+	const target = $("#target").text();
 	
-    const data = {message, keyword};
+    const data = {message, keyword, target};
     
     console.log("(^o^)ๆ Boardcast to " + contextName(botId));
     

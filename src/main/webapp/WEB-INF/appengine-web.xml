@@ -35,12 +35,12 @@
 		<env-var name="projectId" value="flex-311116" />
 		<env-var name="storageBucket" value="flex-311116.appspot.com" />
 		
-		<env-var name="apiKey" value="AIzaSyD47O40D6lmsQb8jQUOo7daVv3glSz7XIo" />
-		<env-var name="authDomain" value="eoss-wayo-bot.firebaseapp.com" />
-		<env-var name="databaseURL"	value="https://eoss-wayo-bot.firebaseio.com" />
-		<env-var name="messagingSenderId" value="676972809113" />
-		<env-var name="appId" value="1:676972809113:android:0ffd90b8c85895e6fb2108" />
-		<env-var name="vapidKey" value="BG6X7TWkNee2kEYHt2RCNBYuqCaeAws5t-w2bs_vncgqIuN3r9oE8lqJHEfh4h0vByYx372ipDpVNgQF_fZ6mSg" />
+  		<env-var name="apiKey" value="AIzaSyAT8fWIcFHQwaf6B6PYpaU6iS4j2_Pg04Y" />
+		<env-var name="authDomain" value="flex-311116.firebaseapp.com" />
+		<env-var name="databaseURL"	value="https://flex-311116.firebaseio.com" />
+		<env-var name="messagingSenderId" value="812802017144" />
+		<env-var name="appId" value="1:812802017144:web:b9198c8c2e9d97a292ea8d" />
+		<env-var name="vapidKey" value="BIwzxZpNOQwUvsqO-sbJRb4af99e6ebVu6RLrmSBYT7cUAHYQ9jEwToqtTma3bwI6818LJsN9jpU6uTOGDyP-eE" />
 		
 		<!-- Your Domain Replace www.wayobot.com to your domain or storageBucket's 
 			URL if you don't have any registration domain's name. 

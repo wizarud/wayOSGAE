@@ -39,8 +39,34 @@
 
 										</tbody>
 									</table>
-								</div>
+								</div>								
 							</div>
+
+                        <div class="card col-md-8" style="padding: 10px;">
+                        	<div id="service-content" class="content" >
+								<div>
+									<label><fmt:message key="push.bot.target" /> : </label>
+									<label id="target" style="text-transform: none;"></label>
+									<br>
+									<label><fmt:message key="push.bot.name" /> : </label>
+									<label id="botName" style="text-transform: none;"></label>
+									<br>
+									<label><fmt:message key="push.Keywords" /> : </label>
+									<select id="keyword"></select>
+								</div>
+						        <div id="chat_widget_input_container">
+						            <form method="post" id="chat_widget_form">
+						            	<input type="file" id="chat_widget_file"><br>
+						                <textarea class="form-control" id="chat_widget_input" ondrop="textAreaDropHandler(event);" ondragover="textAreaDragOverHandler(event);"	rows="4" cols="50"></textarea>
+						                <br>
+						                <div class="col-md-2" style="padding: 0;float: none;">
+						                	<input type="button" class="btn btn-default btn-block" value="<fmt:message key="btt.notification" />!" id="chat_widget_button"/>
+						                </div>
+						            </form>
+						        </div>	
+					        </div>						
+                        </div>
+
 						</div>
 					</div>
 				</div>
@@ -63,6 +89,7 @@
 }
 </style>
 <script src="js/lib/jquery-ui.min.js"></script>
+<script src="js/push-service2.js"></script>
 <script type="text/javascript">
 
 var lastSelectedRow;
@@ -130,6 +157,13 @@ function loadReport() {
     		    		td = $("<td>" + vars[row] + "</td>");
     		    		tr.append(td);
     		    		
+    		    		tr.click(function() {
+    		    			
+    		    			const tokens = vars[row].split("|");
+    		    			$("#target").text(tokens[0] + "/" + tokens[1]);
+    		    			
+    		    		});
+    		    		
     		    		table.append(tr);
     		    	}
     		    	
@@ -190,6 +224,14 @@ function onBotListLoaded() {
 	});
 
 	loadReport();
+	
+	//Push to target sessionId service
+	$("#botName").text(botId);
+	$("#chat_widget_file").change(function() {
+		sendFiles(document.getElementById("chat_widget_file").files);
+	});
+	$("#chat_widget_button").show();
+	loadKeywords();
 }
 </script>
 </html>

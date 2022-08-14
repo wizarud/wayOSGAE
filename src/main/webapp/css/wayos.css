@@ -1,10 +1,12 @@
-.eoss_msg_wrap {
+.wayos_msg_wrap {
 	display:none;
 }
-.eoss_msg_wrap.active{
+
+.wayos_msg_wrap.active {
     display: block;
 }
-.eoss_msg_head{
+
+.wayos_msg_head {
 	color:white;
 	padding:15px;
 	font-weight:bold;
@@ -14,7 +16,7 @@
 	/*padding-right: 30px;*/
 }
 
-.eoss_image_head {
+.wayos_image_head {
     width: 90%;
     height: 400px;
 	margin: 5px auto;
@@ -27,7 +29,7 @@
     background-size: cover;
 }
 
-.eoss_menu_item {
+.wayos_menu_item {
 	cursor: pointer;
     width: 80%;
 	margin: 5px;
@@ -46,7 +48,7 @@
 	background:#f39c12;
 }
 
-.eoss_msg_box{
+.wayos_msg_box{
 	position:fixed;
 	bottom:-5px;
 	max-width:300px;
@@ -61,7 +63,7 @@
 	box-shadow: 4px 0px 5px 0px rgba(0,0,0,0.5);
 }
 
-.eoss_msg_body{
+.wayos_msg_body {
 	background:white;
 	height:200px;
 	font-size:12px;
@@ -69,7 +71,8 @@
 	overflow:auto;
 	overflow-x: hidden;
 }
-.eoss_msg_input{
+
+.wayos_msg_input {
 	width:100%;
 	border: 1px solid white;
 	border-top:1px solid #DDDDDD;
@@ -79,7 +82,7 @@
 	font-size: 16px;
 }
 
-.eoss_msg_l{
+.wayos_msg_l {
 	position:relative;
 	background:#FDE4CE;
 	color:black;
@@ -89,7 +92,8 @@
 	margin-right:10px;
 	border-radius:5px;
 }
-.eoss_msg_l:before{
+
+.wayos_msg_l:before {
 	content:"";
 	position:absolute;
 	width:0px;
@@ -100,8 +104,7 @@
 	top:7px;
 }
 
-
-.eoss_msg_r{
+.wayos_msg_r {
 	background:#EEF2E7;
 	color:black;
 	padding:10px;
@@ -112,7 +115,8 @@
 	border-radius:5px;
 	word-wrap: break-word;
 }
-.eoss_msg_r:after{
+
+.wayos_msg_r:after {
 	content:"";
 	position:absolute;
 	width:0px;
@@ -122,31 +126,36 @@
 	right:-20px;
 	top:7px;
 }
-#eoss-likeMessage{
+
+#eoss-likeMessage {
     width: 25%;
     background: #3498db;
     color: white;	
     line-height: 40px;
     margin-bottom: 10px;
 }
-#eoss-dislikeMessage{
+
+#eoss-dislikeMessage {
     width: 25%;
     background: #3498db;
     color: white;	
     line-height: 40px;
     margin-bottom: 10px;
 }
-#eoss-sendMessage{
+
+#eoss-sendMessage {
     width: 50%;
     background: #3498db;
     color: white;	
     line-height: 40px;
     margin-bottom: 10px;
 }
-#eoss-landingLink{
+
+#eoss-landingLink {
     margin-right: 10px;
 }
-#eoss-bell{
+
+#eoss-bell {
     width: 50%;
     background: #3498db;
     color: white;	
@@ -167,7 +176,7 @@
 }
 
 @media (max-width: 500px) {
-	.eoss_mobile {
+	.wayos_mobile {
 		width: 100%;
 	    right: 0;
 	    max-width: 100%;
@@ -178,12 +187,14 @@
 	}
 	
 }
-.eoss_msg_l img{
+
+.wayos_msg_l img {
 	width: 30px;
 	border-radius: 5px;
 	margin-right: 10px;
 }
-.plus-bot{
+
+.plus-bot {
     position: absolute;
     right: 10px;
     top: 10px;
@@ -193,22 +204,23 @@
     font-size: 20px;
     font-weight: bold;
 }
-/*.eoss_mobile .eoss_msg_head{
+
+/*.wayos_mobile .wayos_msg_head{
 	height: 7%;
 }
-.eoss_mobile .eoss_msg_wrap{
+.wayos_mobile .wayos_msg_wrap{
 	height: 93%;
 }
-.eoss_mobile .eoss_msg_body{
+.wayos_mobile .wayos_msg_body{
 	height: 70%;
 }
-.eoss_mobile .eoss_msg_footer{
+.wayos_mobile .wayos_msg_footer{
 	height: 30%;
 }
-.eoss_mobile .eoss_msg_input{
+.wayos_mobile .wayos_msg_input{
 	height: 80%;
 	min-height: auto;
 }
-.eoss_mobile #eoss-sendMessage{
+.wayos_mobile #eoss-sendMessage{
     height: 20%;
 }*/

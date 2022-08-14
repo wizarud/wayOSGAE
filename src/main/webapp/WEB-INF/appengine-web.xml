@@ -46,7 +46,7 @@
 		<env-var name="publicHome" value="public/" />
 		
 		<env-var name="showcaseAccountId" value="103014451870896" />
-		<env-var name="showcaseBotId" value="Michael-Yong" />
+		<env-var name="showcaseBotId" value="eoss-th" />
 
 		<env-var name="templateContextNames" value="103014451870896/Michael-Yong" />
 		

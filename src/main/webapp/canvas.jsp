@@ -31,12 +31,23 @@ body, html {
 <div class="bg"></div>
 <script>
 	window.onload = function (e) {
-		if (parent && parent.eossWayoBot) {
+		if (parent && parent.wayOS) {
 			
 			const image = new Image();
 			image.onload = function () {
-				//parent.eossWayoBot.adjustFrameHeight(this.width, this.height);
+				//parent.wayOS.adjustFrameHeight(this.width, this.height);
+				if (parent.wayOS.next) {
+					
+					//Add more delay for image display
+					setTimeout(function() {
+						
+						parent.wayOS.next();
+						delete parent.wayOS.next;
+						
+					}, 2500);
+				}
 			}
+			
 			image.src = "<%= imgPath %>";
 			
 		}

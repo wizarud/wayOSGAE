@@ -131,14 +131,14 @@
 		return sessionId;
 	}
 	
-	var eossWayoBot = {
+	var wayOS = {
 		domain: "<%= domain %>",
 		sessionId: localSessionId(),
 		accountId: "<%= accountId %>",
 		botId: "<%= botId %>"
 	};
 	
-	eossWayoBot.adjustFrameHeight = function(width, height) {
+	wayOS.adjustFrameHeight = function(width, height) {
 		
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
@@ -146,7 +146,7 @@
 		}
 	}
 	
-	eossWayoBot.onRing = function(accountId, botId, success) {
+	wayOS.onRing = function(accountId, botId, success) {
 		
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
@@ -164,20 +164,31 @@
 		}
 	}
 	
-	eossWayoBot.onDisplayImage = function(imageURL) {
+	wayOS.onDisplayImage = function(imageURL, next) {
 
+		console.log("onDisplayImage: " + encodeURIComponent(imageURL));
+		
+		if (next) {			
+			wayOS.next = next;
+		}
+		
 		let frame = document.getElementById("wayos-frame");	
 		if (frame) {
 			const src = frame.src;
+			frame.onload = function() {
+			}
 			frame.onerror = function () {
 				this.src = src;
 			}
 			
-			frame.src = "https://" + window.location.hostname + "/canvas.jsp?img=" + imageURL;	    
+			frame.src = "https://" + window.location.hostname + "/canvas.jsp?img=" + encodeURIComponent(imageURL);
 		}
+		
 	}
 
-	eossWayoBot.onDisplayYoutube = function(youtubeId) {
+	wayOS.onDisplayYoutube = function(youtubeId, next) {
+		
+		console.log("onDisplayYoutube: " + youtubeId);
 		
 		let frame = document.getElementById("wayos-frame");	
 		if (frame) {
@@ -186,10 +197,16 @@
 				this.src = src;
 			}
 			frame.src = "https://www.youtube.com/embed/" + youtubeId;
-		}	
+		}
+		
+		if (next) {
+			next();
+		}
 	}
 
-	eossWayoBot.onDisplayWeb = function(url) {
+	wayOS.onDisplayWeb = function(url, next) {
+		
+		console.log("onDisplayWeb: " + url);
 		
 		let frame = document.getElementById("wayos-frame");
 		if (frame /*&& (url.startsWith("https://wayobot.com") || url.startsWith("https://www.wayobot.com"))*/) {
@@ -197,15 +214,21 @@
 			frame.onload = function () {
 				this.style.height = this.contentDocument.body.offsetHeight + 'px';			
 				this.onload = null;
+				if (next) {
+					next();
+				}		
 			}
 			frame.onerror = function () {
 				this.src = src;
 			}
 			frame.src = url;
 		}
+		
 	}
 
-	eossWayoBot.onDisplayCatalog = function(innerHTML) {
+	wayOS.onDisplayCatalog = function(innerHTML, next) {
+		
+		console.log("onDisplayCatalog: " + innerHTML);
 		
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
@@ -217,8 +240,12 @@
 				this.onload = null;
 				
 				//Focus text area if there is no choices!
-				if (innerHTML.indexOf("eoss_menu_item")===-1) {
+				if (innerHTML.indexOf("wayos_menu_item")===-1) {
 				    inputTextArea.focus();					
+				}
+				
+				if (next) {
+					next();
 				}
 			}
 			frame.onerror = function () {
@@ -226,10 +253,13 @@
 			}
 			frame.src = "/panel.jsp";
 		}
+		
 	}
 	
-	eossWayoBot.onDisplayText = function(text) {
-		
+	wayOS.onDisplayText = function(text, next) {
+
+		console.log("onDisplayText: " + text);
+        		
 		let innerHTML = "<div align=\"center\" class=\"vertical-center\"><h1>" + text + "</h1></div>";
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
@@ -239,6 +269,10 @@
 				this.style.width = "100%";
 				this.style.height = FRAME_HEIGHT;
 				this.onload = null;
+				
+				if (next) {
+					next();
+				}
 			}
 			frame.onerror = function () {
 				this.src = src;
@@ -248,7 +282,7 @@
 		
 	}
 	
-	eossWayoBot.animateResponseText = function(message) {
+	wayOS.animateResponseText = function(message) {
 		
 		if (message === "") return;
 		
@@ -258,17 +292,25 @@
 		* Display Simple Animation on wayos-frame
 		*/
 		setTimeout(function() {
+			
+			const callee = arguments.callee.bind(this);
+			
+			function next() {
 				
+				setTimeout(callee, 500);
+				
+			};
+			
 			let text = texts.shift();
 			
-			console.log("Show: " + text);
-		        
+			if (!text) return;
+			
 		    let urls = text.match(/(http(s?):)([/|.|\w|\s|-])*(\?.*)?/g);
 		        
 		    //if (text.indexOf('<div style="overflow: auto; white-space: nowrap;">')!==-1) {
 			 if (text.indexOf('<div')!==-1) {
 		        	
-		    	this.onDisplayCatalog(text);
+		    	this.onDisplayCatalog(text, next);
 		    	
 		    } else if (urls!=null && urls.length > 0) {
 		    	
@@ -285,45 +327,45 @@
  		        		
  		        		if (x.indexOf(" target")>0) {
  		        			
- 		        			this.onDisplayYoutube(x.substr(0, x.indexOf(" target") - 1));
+ 		        			this.onDisplayYoutube(x.substr(0, x.indexOf(" target") - 1), next);
  		        			
  		        		} else {
  		        			
- 		        			this.onDisplayYoutube(x);
+ 		        			this.onDisplayYoutube(x, next);
  		        			
  		        		}
  		        		
  		        	} else if (url.startsWith("https://i3.ytimg.com/vi/")) {
  		        		
-		        		this.onDisplayYoutube(url.replace("https://i3.ytimg.com/vi/", "").replace("/maxresdefault.jpg", ""));
+		        		this.onDisplayYoutube(url.replace("https://i3.ytimg.com/vi/", "").replace("/maxresdefault.jpg", ""), next);
  		        		
  		        	} else if (url.indexOf(".jpg")!=-1 || url.indexOf(".jpeg")!=-1 || url.indexOf(".gif")!=-1 || url.indexOf(".png")!=-1) {
 
-	 		        	this.onDisplayImage(url);
+	 		        	this.onDisplayImage(url, next);
 	 		        	
  		        	} /*else if (url.indexOf(".mp3")==-1 && url.indexOf(".m4a")==-1 && url.indexOf(".mp4")==-1) {
  		        		
-	 		        	this.eossWayoBot.onDisplayWeb(url);
+	 		        	this.wayOS.onDisplayWeb(url, next);
 	 		        	
  		        	} */
+ 		        	
+ 		        	else {
+ 		        		
+ 		 		      this.onDisplayText(text, next);
+ 		        		
+ 		        	}
  		        }
  		        
 		    } else {
 		    	
-		      this.onDisplayText(text);
+		      this.onDisplayText(text, next);
 		    	
 		    }
-
-		    if (texts.length > 0) {
-		    	
-		    	setTimeout(arguments.callee.bind(this), 500);
-		    	
-		    } 
-		    
+			 
 		}.bind(this), 0);
 	}
 		
-	eossWayoBot.sendFilesToEossBot = function() {
+	wayOS.sendFilesToEossBot = function() {
 		
 		const input = document.getElementById("fileDialog");
 		
@@ -365,7 +407,7 @@
  		xhr.send(formData);	
  	}
 	
-	eossWayoBot.sendMessageToEossBot = function(message, success) {
+	wayOS.sendMessageToEossBot = function(message, success) {
 		
 		showLoading(true);
 		
@@ -381,9 +423,9 @@
  		    if(xhr.status === 200) {
  		    	
  		    	showLoading(false);
- 				
- 		    	console.log(xhr.responseText);
  		    	
+ 		    	console.log(xhr.responseText);
+ 				
  		    	this.animateResponseText(xhr.responseText);
  		    	
  		    	if (success) {
@@ -396,14 +438,14 @@
  		xhr.send(params);
 	}
 	
-	eossWayoBot.createRichMenuItem = function(key, value) {
+	wayOS.createRichMenuItem = function(key, value) {
 		
 		let li = document.createElement("li");
 		li.className = "login";
 		
 		let a = document.createElement("a");
 		a.innerHTML = key;
-		a.href = "javascript:eossWayoBot.sendMessageToEossBot('" + value + "')";
+		a.href = "javascript:wayOS.sendMessageToEossBot('" + value + "')";
 		a.style.width = "150px";
 		
 		li.appendChild(a);
@@ -411,7 +453,7 @@
 		return li;
 	}
 	
-	eossWayoBot.configBorders = function(config) {
+	wayOS.configBorders = function(config) {
 		
    		let titleHeader = document.getElementById("title");
    		titleHeader.innerHTML = config.title;
@@ -501,7 +543,7 @@
  		this.config = config;
 	}
 
-	eossWayoBot.load = function() {
+	wayOS.load = function() {
 
 		showLoading(true);
 		
@@ -516,8 +558,6 @@
 	 	  		
 	 			showLoading(false);
 	 			
-	 	  		console.log(xhr.responseText);
-	 	  		
 	 	  		this.configBorders(JSON.parse(xhr.responseText));
 	 	  		
 	 	  		this.sendMessageToEossBot("greeting");	 	  		
@@ -537,13 +577,13 @@
 				//TODO: Init Web Worker to monitor inbox
 			} 
 			
-	    	eossWayoBot.load();
+	    	wayOS.load();
 	    	
 		});
 	
 	} catch (x) {
 		
-    	eossWayoBot.load();
+    	wayOS.load();
 	
 	}
 	

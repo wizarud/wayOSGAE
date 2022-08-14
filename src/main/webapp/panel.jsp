@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/wayos.css" />
 <style type="text/css">
-.eoss_image_head {
+.wayos_image_head {
     width: 90%;
     height: 70vh;
 	margin: 0px auto;
@@ -28,9 +28,9 @@
 </style>
 <script>
 
-const eossWayoBot = parent.eossWayoBot;
+const wayOS = parent.wayOS;
 const style = document.createElement('style');
-style.textContent = ".eoss_menu_item { cursor: pointer; width: 80%; margin: 5px; padding: 5px 10px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; background: #FFFFFF; text-align: center; color: " + eossWayoBot.config.borderColor + "; border: 1px solid " + eossWayoBot.config.borderColor + " }";
+style.textContent = ".wayos_menu_item { cursor: pointer; width: 80%; margin: 5px; padding: 5px 10px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; background: #FFFFFF; text-align: center; color: " + wayOS.config.borderColor + "; border: 1px solid " + wayOS.config.borderColor + " }";
 
 document.head.appendChild(style);
 

@@ -13,7 +13,7 @@
 <%@ include file="css.jspf" %>
 <style>
 .eossTextArea {
-	width: 100%;
+	width: 98%;
 	border: 1px solid #DDDDDD;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -22,7 +22,7 @@
 }
 .eossFileButton {
     width: 8%;
-	border: 1px solid white;
+	border: 1px solid #DDDDDD;
    	background: #3498db;
     color: white;
    	line-height: 40px;
@@ -30,7 +30,7 @@
 }
 .eossButton {
     width: 45%;
-	border: 1px solid white;
+	border: 1px solid #DDDDDD;
    	background: #3498db;
     color: white;
    	line-height: 40px;
@@ -82,7 +82,7 @@
 				<p class="footer">
 					<textarea id="inputTextArea" class="eossTextArea" rows="3" cols="55" placeholder="<fmt:message key="textarea.typehere" />"></textarea><br>
 					<input type="file" id="fileDialog" style="display: none">
-					<button id="fileButton" class="eossFileButton">🖼</button><button id="ringButton" class="eossButton" >🔔</button><button id="sendButton" class="eossButton">SEND</button>	
+					<button id="fileButton" class="eossFileButton">🖼</button><button id="ringButton" class="eossButton" >🔔</button><button id="sendButton" class="eossButton">SEND</button>
 				</p>
 		</div>
 	</section>
@@ -260,7 +260,7 @@
 
 		console.log("onDisplayText: " + text);
         		
-		let innerHTML = "<div align=\"center\" class=\"vertical-center\"><h1>" + text + "</h1></div>";
+		let innerHTML = "<div align=\"center\" class=\"vertical-center\"><h1 class=\"wayos_label\">" + text + "</h1></div>";
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
 			const src = frame.src;
@@ -312,6 +312,10 @@
 		        	
 		    	this.onDisplayCatalog(text, next);
 		    	
+		    } else if (text.indexOf(".jpg")!=-1 || text.indexOf(".jpeg")!=-1 || text.indexOf(".gif")!=-1 || text.indexOf(".png")!=-1 || text.indexOf("type=png")!=-1) {
+	        		
+		        this.onDisplayImage(text, next);
+		    
 		    } else if (urls!=null && urls.length > 0) {
 		    	
  		        //let imageURLS = text.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|JPG|JPEG|gif|GIF|png|PNG)/g);
@@ -339,7 +343,7 @@
  		        		
 		        		this.onDisplayYoutube(url.replace("https://i3.ytimg.com/vi/", "").replace("/maxresdefault.jpg", ""), next);
  		        		
- 		        	} else if (url.indexOf(".jpg")!=-1 || url.indexOf(".jpeg")!=-1 || url.indexOf(".gif")!=-1 || url.indexOf(".png")!=-1) {
+ 		        	} else if (url.indexOf(".jpg")!=-1 || url.indexOf(".jpeg")!=-1 || url.indexOf(".gif")!=-1 || url.indexOf(".png")!=-1 || url.indexOf("type=png")!=-1) {
 
 	 		        	this.onDisplayImage(url, next);
 	 		        	
@@ -348,14 +352,13 @@
 	 		        	this.wayOS.onDisplayWeb(url, next);
 	 		        	
  		        	} */
- 		        	
- 		        	else {
+ 		        	 else {
  		        		
  		 		      this.onDisplayText(text, next);
  		        		
  		        	}
  		        }
- 		        
+ 		         		        
 		    } else {
 		    	
 		      this.onDisplayText(text, next);
@@ -453,10 +456,17 @@
 		return li;
 	}
 	
-	wayOS.configBorders = function(config) {
+	wayOS.applyTheme = function(config) {
 		
-   		let titleHeader = document.getElementById("title");
+		document.body.style.backgroundImage = "url('/public/" + this.accountId + "/" + this.botId + ".PNG')";
+		document.body.style.backgroundRepeat = "no-repeat";
+		document.body.style.backgroundSize = "cover";
+		
+		let titleHeader = document.getElementById("title");
    		titleHeader.innerHTML = config.title;
+   		
+		let titleLink = document.getElementById("title_link");
+		titleLink.setAttribute("href", "/x/" + this.accountId + "/" + this.botId);
    		
 	  	let socialSection = document.getElementById("social");
  	  	socialSection.style.background = config.borderColor;
@@ -558,7 +568,7 @@
 	 	  		
 	 			showLoading(false);
 	 			
-	 	  		this.configBorders(JSON.parse(xhr.responseText));
+	 	  		this.applyTheme(JSON.parse(xhr.responseText));
 	 	  		
 	 	  		this.sendMessageToEossBot("greeting");	 	  		
 	 		}

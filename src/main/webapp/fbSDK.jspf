@@ -15,7 +15,7 @@
           appId      : '<%= System.getenv("facebook_appId") %>',
           cookie     : true,
           xfbml      : true,
-          version    : 'v9.0'
+          version    : '<%= System.getenv("facebook_apiVersion") %>'
         });
           
         FB.AppEvents.logPageView();

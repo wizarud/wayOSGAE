@@ -12,6 +12,9 @@
 <title>WAYOS</title>
 <%@ include file="css.jspf" %>
 <style>
+body, div, section, iframe {
+	touch-action: none;
+}
 .eossTextArea {
 	width: 98%;
 	border: 1px solid #DDDDDD;
@@ -37,9 +40,9 @@
     margin-bottom: 10px;
 }
 .context {
-  margin: 0;
-  padding: 10px 0;
-  width: 100%;
+	margin: 0;
+	padding: 10px 0;
+	width: 100%;
 }
 .footer {
    position: fixed;
@@ -77,7 +80,7 @@
 	%>
 	
 	<section class="context">
-		<div class="col-md-12" style="text-align: center; padding: 0;">
+		<div class="col-md-12" style="text-align: center; padding: 0; touch-action: none">
 			<iframe id="wayos-frame" frameborder="0" scrolling="no" allowfullscreen></iframe>
 				<p class="footer">
 					<textarea id="inputTextArea" class="eossTextArea" rows="3" cols="55" placeholder="<fmt:message key="textarea.typehere" />"></textarea><br>
@@ -132,7 +135,7 @@
 	}
 	
 	var wayOS = {
-		domain: "<%= domain %>",
+		domain: location.protocol + '//' + location.host,
 		sessionId: localSessionId(),
 		accountId: "<%= accountId %>",
 		botId: "<%= botId %>"
@@ -165,10 +168,22 @@
 	}
 	
 	wayOS.onDisplayImage = function(imageURL, next) {
-
-		console.log("onDisplayImage: " + encodeURIComponent(imageURL));
 		
-		if (next) {			
+		console.log("onDisplayImage: " + imageURL);
+		
+		let frame = document.getElementById("wayos-frame");
+		if (frame) {
+			frame.src = "";
+		}
+		
+		this.showBackground(imageURL, next);
+	}
+	
+	wayOS.onDisplayImageInFrame = function(imageURL, next) {
+
+		console.log("onDisplayImageInFrame: " + encodeURIComponent(imageURL));
+		
+		if (next) {
 			wayOS.next = next;
 		}
 		
@@ -368,7 +383,7 @@
 		}.bind(this), 0);
 	}
 		
-	wayOS.sendFilesToEossBot = function() {
+	wayOS.dropFile = function() {
 		
 		const input = document.getElementById("fileDialog");
 		
@@ -410,7 +425,7 @@
  		xhr.send(formData);	
  	}
 	
-	wayOS.sendMessageToEossBot = function(message, success) {
+	wayOS.parse = function(message, success) {
 		
 		showLoading(true);
 		
@@ -448,7 +463,7 @@
 		
 		let a = document.createElement("a");
 		a.innerHTML = key;
-		a.href = "javascript:wayOS.sendMessageToEossBot('" + value + "')";
+		a.href = "javascript:wayOS.parse('" + value + "')";
 		a.style.width = "150px";
 		
 		li.appendChild(a);
@@ -456,11 +471,41 @@
 		return li;
 	}
 	
-	wayOS.applyTheme = function(config) {
+	wayOS.showBackground = function(imageURL, next) {
 		
-		document.body.style.backgroundImage = "url('/public/" + this.accountId + "/" + this.botId + ".PNG')";
+		let backgroundSize = "contain";
+		//Set to Default Background
+		if (!imageURL) {
+			imageURL = "/public/" + this.accountId + "/" + this.botId + ".PNG";
+			backgroundSize = "cover";
+		}
+		
+		document.body.style.backgroundImage = "url('" + imageURL + "')";
 		document.body.style.backgroundRepeat = "no-repeat";
-		document.body.style.backgroundSize = "cover";
+		document.body.style.backgroundSize = backgroundSize;
+		document.body.style.backgroundPosition = "center";
+		document.body.style.backgroundColor = this.config.borderColor;
+		
+		if (next) {
+			const interval = imageURL.indexOf("https://eoss-setfin") === -1 ? 500 : 2500;
+			const image = new Image();
+			image.onload = function () {
+				//Add more delay for image display
+				setTimeout(function() {
+					
+					next();
+					
+				}, interval);
+			}
+			image.src = imageURL;
+		}
+
+	}
+	
+	wayOS.applyTheme = function(config) {
+				
+		document.addEventListener('touchstart', function(e) {e.preventDefault()}, false);
+		document.addEventListener('touchmove', function(e) {e.preventDefault()}, false);		
 		
 		let titleHeader = document.getElementById("title");
    		titleHeader.innerHTML = config.title;
@@ -531,26 +576,30 @@
  	  	fileButton.addEventListener('click', function() {
  	  		let fileDialog = document.getElementById("fileDialog");
  	  		fileDialog.onchange = function () {
- 	 	  		this.sendFilesToEossBot();
+ 	 	  		this.dropFile();
  	  		}.bind(this);
  	  		fileDialog.click();
  	  	}.bind(this));
  	  	
  		ringButton.addEventListener('click', function(event) {
+ 			this.showBackground();
             var message = "greeting";
-			this.sendMessageToEossBot(message);
+			this.parse(message);
 	    }.bind(this));
  		
  		sendButton.addEventListener('click', function(event) {
             var message = inputTextArea.value.trim();
 			if (message != '') {
-				this.sendMessageToEossBot(message, function() {
+				this.parse(message, function() {
 					inputTextArea.value = "";
 				});
 			}
 	    }.bind(this));
  		
  		this.config = config;
+ 		
+		this.showBackground();
+ 		
 	}
 
 	wayOS.load = function() {
@@ -570,9 +619,9 @@
 	 			
 	 	  		this.applyTheme(JSON.parse(xhr.responseText));
 	 	  		
-	 	  		this.sendMessageToEossBot("greeting");	 	  		
+	 	  		this.parse("greeting");	 	  		
 	 		}
-	 	  	 			
+
 	 	}.bind(this);
 	 	
 	 	xhr.send();

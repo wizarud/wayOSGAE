@@ -63,7 +63,7 @@
 							<li class="login" style="width: auto">
 							<a class="fbLogin">
 								<%--fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button--%>
-								<fb:login-button size="large" scope="public_profile,,email,pages_show_list,pages_manage_metadata,pages_messaging,pages_manage_engagement,pages_read_engagement,pages_read_user_content,pages_manage_posts" onlogin="checkLoginState();"></fb:login-button>
+								<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
 							</a>
 							</li>
 							

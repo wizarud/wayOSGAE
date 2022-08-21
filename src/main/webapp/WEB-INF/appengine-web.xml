@@ -25,30 +25,32 @@
 
 	<env-variables>
 
-		<env-var name="brainySecret" value="P@ndapinkla0" />
+		<env-var name="brainySecret" value="<Your Secret>" />
 
 		<!-- Facebook Sdk -->
-		<env-var name="facebook_appId" value="208498564198080" />
-		<env-var name="facebook_appSecret" value="737cc872ed147383738038b9bba330e1" />
+		<env-var name="facebook_appId" value="<Your Facebook App Id>" />
+		<env-var name="facebook_appSecret" value="<Your Facebook App Secret>" />
+		<env-var name="facebook_apiVersion" value="<Your Facebook API Version>" />
 
 		<!-- Firebase Setup -->
-		<env-var name="projectId" value="flex-311116" />
-		<env-var name="storageBucket" value="flex-311116.appspot.com" />
+		<env-var name="projectId" value="<Your Google AppEngine Project Id>" />
+		<env-var name="storageBucket" value="<Your Google Storage Bucket>" />
 				
 		<!-- Your Domain Replace www.wayobot.com to your domain or storageBucket's 
 			URL if you don't have any registration domain's name. 
 			Ex: https://<Your Project Id>.appspot.com 
 		-->
-		<env-var name="domain" value="https://flex-311116.appspot.com" />
+		<env-var name="domain" value="<Your Domain Name>" />
 
 		<!-- Root Directory for context files -->
 		<env-var name="contextHome" value="libs/" />
 		<env-var name="publicHome" value="public/" />
 		
-		<env-var name="showcaseAccountId" value="103014451870896" />
-		<env-var name="showcaseBotId" value="eoss-th" />
+		<env-var name="showcaseAccountId" value="<Your Default Facebook User Id>" />
+		<env-var name="showcaseBotId" value="<Your Default Bot Id>" />
 
-		<env-var name="templateContextNames" value="103014451870896/Michael-Yong" />
+		<!-- Comma separator templates -->
+		<env-var name="templateContextNames" value="<Your Context Template List>" />
 		
 	</env-variables>
 

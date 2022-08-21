@@ -5,7 +5,7 @@
 <script src="/js/convertCountryName.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/modernizr.js"></script>
-<script src="/js/wayos.js"></script>
+<script src="/js/wayos2.js"></script>
 <script src="/js/jquery.sldr.js"></script>
 <script src="/js/qrcode.js"></script>
 <script src="/js/qrcode.min.js"></script>

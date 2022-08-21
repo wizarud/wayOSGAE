@@ -14,12 +14,9 @@
 				</div>
 				<div class="center-content">
 					<a style="display: inline-block;" onclick="overlayOn('forget')"><h5>Forgot Password</h5></a>
-					<input type="submit" value="<fmt:message key="btt.login" />" class="btn btn-default" style="float: right;margin-top: 0;margin-bottom: 20px;">
-				
-				</div>	
-				
+					<input type="submit" value="<fmt:message key="btt.login" />" class="btn btn-default" style="float: right;margin-top: 0;margin-bottom: 20px;">				
+				</div>
 			</form>
-			
 			<form id="forget">
 				<span id="forget-err" style="color: red;font-size: 13px;"></span>
 				<div class="form-group">
@@ -34,7 +31,6 @@
 	</div>
 	
 	<div id="register" class="overlay">
-		
 		<div class="col-md-6 col-sm-12 col-xs-12 signin register" style="position: absolute;">
 			<button onclick="overlayOff();" class="close-btn" style="z-index: 3;">x</button>
 			<div class="row">
@@ -160,7 +156,6 @@
 										
 									</div>
 								</form>								
-								
 							</div>
 					</div>
 				</div>
@@ -173,22 +168,3 @@
 			<div class="loader"></div> 
 		</div>		
 	</div>
-	
-	<div id="addBotChatRoom" class="overlay">
-		<div class="col-md-6 col-sm-12 col-xs-12 botList" style="position: absolute;">
-			<div class="col-sm-12 col-xs-12 botList-inner" id="botListInner">
-			</div>
-			<div class="center-content">
-				<input type="button" value="Close" class="btn btn-default" style="float: right;" onclick="overlayOff('addBotChatRoom')">
-			</div>
-		</div>
-	</div>	
-	
-	<%-- 
-	<div id="price" class="overlay">
-		<div class="col-md-6 col-sm-12 col-xs-12 signin" style="position: absolute;">
-			<button onclick="overlayOff();" class="close-btn" style="z-index: 3;">x</button>
-			<img style="margin-top: 29px" src="/assets/images/WAYOPackages.png"/>
-		</div>
-	</div>
-	--%>

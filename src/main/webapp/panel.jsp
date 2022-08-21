@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/wayos.css" />
 <style type="text/css">
+body, div.vertical-center, p {
+	touch-action: none;
+}
 .wayos_image_head {
 	cursor: pointer;
     width: 90%;
@@ -18,12 +21,12 @@
     background-size: cover;
 }
 .vertical-center {
-  margin: 0;
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+	margin: 0;
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 </style>
 <script>

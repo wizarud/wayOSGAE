@@ -2,10 +2,10 @@
 Google AppEngine Web Project for wayOS
 
 ## Motivation
-To be updated Later
+Cute and Functional Web Application 
 
 ## Build status
-To be updated later
+Ready for customization
 
 ## Screenshots
 
@@ -30,7 +30,7 @@ See https://github.com/wizarud/wayOS
 See https://github.com/wizarud/wayOS
 
 ## Installation
-To be updated later
+Deploy as Google AppEngine Java Standard (1.8)
 
 ## How to use?
 To be updated later

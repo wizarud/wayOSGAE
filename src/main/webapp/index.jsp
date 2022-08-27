@@ -73,9 +73,11 @@ body, div, section, iframe {
 	/**
 	* Default contextName
 	*/
+	boolean isShowcase = false;
 	if (accountId == null || botId == null) {
 		accountId = System.getenv("showcaseAccountId");
 		botId = System.getenv("showcaseBotId");
+		isShowcase = true;
 	}	
 	%>
 	
@@ -121,6 +123,12 @@ body, div, section, iframe {
 		} else {
 			element.style.display = "none";
 		}
+	}
+	
+	function toggleMenuBar() {
+    	if ($('.navbar-toggle').css('display') != 'none') {
+    		$('.navbar-toggle').trigger("click");
+        }		
 	}
 	
 	function localSessionId() {
@@ -169,8 +177,6 @@ body, div, section, iframe {
 	
 	wayOS.onDisplayImage = function(imageURL, next) {
 		
-		console.log("onDisplayImage: " + imageURL);
-		
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
 			frame.src = "";
@@ -181,8 +187,6 @@ body, div, section, iframe {
 	
 	wayOS.onDisplayImageInFrame = function(imageURL, next) {
 
-		console.log("onDisplayImageInFrame: " + encodeURIComponent(imageURL));
-		
 		if (next) {
 			wayOS.next = next;
 		}
@@ -202,8 +206,6 @@ body, div, section, iframe {
 	}
 
 	wayOS.onDisplayYoutube = function(youtubeId, next) {
-		
-		console.log("onDisplayYoutube: " + youtubeId);
 		
 		let frame = document.getElementById("wayos-frame");	
 		if (frame) {
@@ -243,8 +245,6 @@ body, div, section, iframe {
 
 	wayOS.onDisplayCatalog = function(innerHTML, next) {
 		
-		console.log("onDisplayCatalog: " + innerHTML);
-		
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
 			const src = frame.src;
@@ -273,8 +273,6 @@ body, div, section, iframe {
 	
 	wayOS.onDisplayText = function(text, next) {
 
-		console.log("onDisplayText: " + text);
-        		
 		let innerHTML = "<div align=\"center\" class=\"vertical-center\"><h1 class=\"wayos_label\">" + text + "</h1></div>";
 		let frame = document.getElementById("wayos-frame");
 		if (frame) {
@@ -402,9 +400,6 @@ body, div, section, iframe {
     		fileNames += files[i].name + " ";
         }
         
-        console.log("Sending File.." + fileNames);
-        console.log("Total Files Size: " + totalSize);
-
  		let xhr = new XMLHttpRequest();
  		let url = this.domain + "/webhooks/" + this.accountId + "/" + this.botId + "/" + this.sessionId;
  		
@@ -439,11 +434,9 @@ body, div, section, iframe {
  		xhr.onload = function() {
  			
  		    if(xhr.status === 200) {
- 		    	
+ 		    	 	            
  		    	showLoading(false);
  		    	
- 		    	console.log(xhr.responseText);
- 				
  		    	this.animateResponseText(xhr.responseText);
  		    	
  		    	if (success) {
@@ -463,7 +456,7 @@ body, div, section, iframe {
 		
 		let a = document.createElement("a");
 		a.innerHTML = key;
-		a.href = "javascript:wayOS.parse('" + value + "')";
+		a.href = "javascript:wayOS.parse('" + value + "', toggleMenuBar)";
 		a.style.width = "150px";
 		
 		li.appendChild(a);
@@ -510,11 +503,27 @@ body, div, section, iframe {
 		let titleHeader = document.getElementById("title");
    		titleHeader.innerHTML = config.title;
    		
-		let titleLink = document.getElementById("title_link");
-		titleLink.setAttribute("href", "/x/" + this.accountId + "/" + this.botId);
+		let titleLink = document.getElementById("title_link");		
+		let titleURI = "<%= isShowcase ? "/" : "/x/" + accountId + "/" + botId %>";
+		titleLink.setAttribute("href", titleURI);
    		
 	  	let socialSection = document.getElementById("social");
  	  	socialSection.style.background = config.borderColor;
+ 	  	
+  		let loading = document.getElementById("loading");
+ 	  	if (config.loadingGif) {
+
+ 	  		loading.classList.remove("loader");
+ 	  		loading.classList.add("gifLoader"); 	  		
+ 	  		loading.style.backgroundImage = "url('" + config.loadingGif + "')";
+ 	  		
+ 	  	} else {
+ 	  		
+ 	  		loading.classList.remove("gifLoader");
+ 	  		loading.classList.add("loader");
+ 	  		loading.style.backgroundImage = "";
+ 	  		
+ 	  	}
    		
 	   	let richMenus = document.getElementById("richMenus");
 	   	
@@ -536,22 +545,16 @@ body, div, section, iframe {
  	  	let liElements = document.querySelectorAll("li.login");
  	  	let buttonElement;
  	  	for (let i in liElements) {
- 	  			
+ 	  	
+	  		if (liElements[i].style) continue; //Skip Fb Login
+	  		
  	  		try {
  	  			
  	  			buttonElement = liElements[i].children[0];
-	 	 				 	  					 	  				
-	  			if (buttonElement.innerHTML === "Home") {
-	 	  				
-	   				buttonElement.style.color = "WHITE";
-	   				buttonElement.style.backgroundColor = config.borderColor;
-		 	  			
-	   			} else {
-	 	  				
-	   				buttonElement.style.color = config.borderColor;
-	   				buttonElement.style.borderColor = config.borderColor;
-	 	  				
-	   			}
+	 	 		 	  			
+   				buttonElement.style.color = config.borderColor;
+   				buttonElement.style.borderColor = config.borderColor;
+   				buttonElement.style.backgroundColor = "WHITE";
 	 	  			
  			} catch (e) {
  	  				

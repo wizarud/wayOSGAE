@@ -14,6 +14,7 @@ function getChatbox() {
 			
 			$("#title").val(props.title);
 			$("#borderColor").val(!props.borderColor?"#64c583":props.borderColor);
+			$("#loadingGif").val(props.loadingGif);
 			$("#countryLangContext").val(props.language.toUpperCase());
 			
 			$("#borderColor").spectrum({
@@ -40,7 +41,7 @@ $("#update").click(function() {
 		$("#errorMessage").hide();
 		
  		let url = "/console/props/" + contextName(botId);
- 		let params = "title=" + $("#title").val() + "&borderColor=" + $("#borderColor").val() + "&language=" + $("#countryLangContext").val();
+ 		let params = "title=" + $("#title").val() + "&borderColor=" + $("#borderColor").val() + "&loadingGif=" + $("#loadingGif").val() + "&language=" + $("#countryLangContext").val();
  		
  		let xhr = new XMLHttpRequest();
  		xhr.open("PUT", url, true);

@@ -1933,6 +1933,19 @@ float: right;
     margin-left: -35px;
 }
 
+.gifLoader {
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -35px;
+    margin-left: -35px;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+ 	background-size: contain;    
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

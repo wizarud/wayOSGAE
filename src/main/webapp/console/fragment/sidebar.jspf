@@ -52,6 +52,12 @@
 					<p><fmt:message key="sidbar.chatbotscript" /></p>
 				</a>
 			</li>
+			<li class="quiz">
+				<a href="quiz.jsp">
+					<i class="pe-7s-hourglass"></i>
+					<p>Quiz</p>
+				</a>
+			</li>
 			<li class="catalog_spreadSheet">
 				<a href="catalog_spreadSheet.jsp">
 					<i class="pe-7s-magic-wand"></i>

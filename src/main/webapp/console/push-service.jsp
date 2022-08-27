@@ -53,7 +53,7 @@
 </body>
 <%@ include file="fragment/env-js.jspf" %>		
 
-<script src="js/push-service2.js"></script>
+<script src="js/push-service.js"></script>
 
 <script type="text/javascript">
 function onBotListLoaded() {

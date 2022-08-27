@@ -30,7 +30,12 @@
 										<span class="col-md-8" style="display: inline-block;float: none;">
 											<input id="borderColor" type="text" class="form-control" value="<fmt:message key="chatbox.loading" />">
 										</span>	
-										<br>										
+										<br>
+										<label style="margin-top: 10px;">Loading Gif : </label>
+										<span class="col-md-8" style="display: inline-block;float: none;">
+											<input id="loadingGif" type="text" class="form-control" value="<fmt:message key="chatbox.loading" />">
+										</span>	
+										<br>																						
 										<label style="margin-top: 10px;"><fmt:message key="chatbox.language" /> : </label>
 										<span class="col-md-8" style="display: inline-block;float: none;">
 											<select id ="countryLangContext" style="height: 30px;" required="required" data-placeholder="<fmt:message key="chatbox.select.language" />">
@@ -130,7 +135,7 @@
 <%@ include file="fragment/env-js.jspf" %>
 <script src='js/lib/spectrum.js'></script>
 <link rel='stylesheet' href='css/spectrum.css' />
-<script src="js/chatbox.js"></script> 
+<script src="js/chatbox2.js"></script> 
 <script type="text/javascript">
 function onBotListLoaded() {
 	getChatbox();

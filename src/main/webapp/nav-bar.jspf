@@ -25,8 +25,7 @@
 
 	<nav class="navbar navbar-default">
 		<div class="container">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border: 0">
 
 				<ul id="richMenus" class="nav navbar-nav">
 					<%
@@ -55,16 +54,14 @@
 					
 							<style type="text/css">.cd-pricing-wrapper form{display: block;}.cd-select{display: none !important;}</style>
 							<li class="login"><a href="/console/dashboard.jsp" <%= a %>><fmt:message key="sidbar.dashboard" /></a></li>
-							<li class="login"><a href="/console/inbox.jsp" id="displayUn" <%= a %>><%= name %></a></li>
 							<li class="login"><a onclick="logout();" style="cursor: pointer; width: 150px;"><fmt:message key="btt.logout" /></a></li>
 	
 					<% } else { %>
 					
 							<li class="login" style="width: auto">
-							<a class="fbLogin">
-								<%--fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button--%>
-								<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-							</a>
+								<a class="fbLogin">
+									<fb:login-button size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+								</a>
 							</li>
 							
 					<% } %>
